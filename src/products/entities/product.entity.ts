@@ -1,4 +1,5 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { ProductImage } from './product-image.entity';
 
 // This is a table
 @Entity()
@@ -36,6 +37,13 @@ export class Product {
     tags: string[]
 
     //Images
+    // Un producto puede tener muchas imagenes
+    @OneToMany(
+        ()=> ProductImage,
+        (productImage) => productImage.product,
+        {cascade: true}
+    )
+    images?: ProductImage
 
 
     @BeforeInsert()
